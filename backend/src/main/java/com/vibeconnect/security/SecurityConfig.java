@@ -35,6 +35,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/**",
                                 "/api/v1/colleges/**",
                                 "/api/v1/prompts/**",
+                                "/api/v1/connections/**",
                                 "/error",
                                 "/ws/**"
                         ).permitAll()

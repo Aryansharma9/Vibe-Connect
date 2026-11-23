@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_colors.dart';
 import '../models/prompt_answer.dart';
 import '../providers/auth_provider.dart';
 import '../providers/prompt_provider.dart';
+import '../providers/connection_provider.dart';
+import '../widgets/send_connection_dialog.dart';
 
 class HomeDashboardScreen extends ConsumerStatefulWidget {
   const HomeDashboardScreen({super.key});
@@ -93,39 +96,75 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                           ),
                         ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: user?.isStudentVerified == true
-                              ? AppColors.verifiedBlue.withOpacity(0.15)
-                              : AppColors.surfaceLight,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: user?.isStudentVerified == true
-                                ? AppColors.verifiedBlue
-                                : Colors.transparent,
+                      Row(
+                        children: [
+                          // Inbox button with badge
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final countAsync = ref.watch(pendingCountProvider);
+                              final count = countAsync.value ?? 0;
+                              return Stack(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.mark_email_unread_outlined, color: Colors.white, size: 24),
+                                    onPressed: () => context.push('/inbox'),
+                                  ),
+                                  if (count > 0)
+                                    Positioned(
+                                      right: 6,
+                                      top: 6,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.primary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Text(
+                                          '$count',
+                                          style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              user?.isStudentVerified == true ? Icons.verified : Icons.school,
+                          const SizedBox(width: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
                               color: user?.isStudentVerified == true
-                                  ? AppColors.verifiedBlue
-                                  : AppColors.campusLietGold,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              user?.isStudentVerified == true ? 'Verified Student' : 'LIET Student',
-                              style: GoogleFonts.plusJakartaSans(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
+                                  ? AppColors.verifiedBlue.withOpacity(0.15)
+                                  : AppColors.surfaceLight,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: user?.isStudentVerified == true
+                                    ? AppColors.verifiedBlue
+                                    : Colors.transparent,
                               ),
                             ),
-                          ],
-                        ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  user?.isStudentVerified == true ? Icons.verified : Icons.school,
+                                  color: user?.isStudentVerified == true
+                                      ? AppColors.verifiedBlue
+                                      : AppColors.campusLietGold,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  user?.isStudentVerified == true ? 'Verified Student' : 'LIET Student',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -597,13 +636,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Phase 3 feature: Send connection note to ${user?.fullName}!"),
-                    ),
-                  );
-                },
+                onPressed: () => SendConnectionModal.show(context, answer),
                 icon: const Icon(Icons.favorite_border, color: AppColors.primary, size: 18),
                 label: Text(
                   'Connect with Note',

@@ -8,6 +8,7 @@ import 'screens/college_picker_screen.dart';
 import 'screens/profile_setup_screen.dart';
 import 'screens/campus_verify_screen.dart';
 import 'screens/home_dashboard_screen.dart';
+import 'screens/connections_inbox_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/dashboard',
       builder: (context, state) => const HomeDashboardScreen(),
+    ),
+    GoRoute(
+      path: '/inbox',
+      builder: (context, state) => const ConnectionsInboxScreen(),
     ),
   ],
 );
