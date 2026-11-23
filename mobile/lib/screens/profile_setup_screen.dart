@@ -239,12 +239,15 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
             border: Border.all(color: isSelected ? AppColors.primary : AppColors.surfaceLight),
           ),
           child: Center(
-            child: Text(
-              label,
-              style: GoogleFonts.plusJakartaSans(
-                color: Colors.white,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                fontSize: 13,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  color: Colors.white,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  fontSize: 13,
+                ),
               ),
             ),
           ),

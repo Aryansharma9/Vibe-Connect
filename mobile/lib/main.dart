@@ -83,6 +83,25 @@ class VibeConnectApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
+      builder: (context, child) {
+        final mediaQuery = MediaQuery.of(context);
+        return Container(
+          color: Colors.black,
+          alignment: Alignment.center,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: MediaQuery(
+              data: mediaQuery.copyWith(
+                textScaler: mediaQuery.textScaler.clamp(
+                  minScaleFactor: 0.85,
+                  maxScaleFactor: 1.25,
+                ),
+              ),
+              child: child ?? const SizedBox.shrink(),
+            ),
+          ),
+        );
+      },
       routerConfig: _router,
     );
   }

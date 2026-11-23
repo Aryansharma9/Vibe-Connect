@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_colors.dart';
+import '../core/widgets/responsive_layout.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final titleFontSize = screenWidth < 380 ? 34.0 : 42.0;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 20.0),
+        child: ResponsiveScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,12 +34,15 @@ class WelcomeScreen extends StatelessWidget {
                   children: [
                     const Icon(Icons.school, color: AppColors.campusLietGold, size: 16),
                     const SizedBox(width: 8),
-                    Text(
-                      'Greater Noida Campus Edition • LIET Hub',
-                      style: GoogleFonts.plusJakartaSans(
-                        color: AppColors.campusLietGold,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                    Flexible(
+                      child: Text(
+                        'Greater Noida Campus Edition • LIET Hub',
+                        style: GoogleFonts.plusJakartaSans(
+                          color: AppColors.campusLietGold,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -48,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                 'Meet through\nmoments,\nnot swipes.',
                 style: GoogleFonts.plusJakartaSans(
                   color: AppColors.textPrimary,
-                  fontSize: 44,
+                  fontSize: titleFontSize,
                   fontWeight: FontWeight.w800,
                   height: 1.1,
                   letterSpacing: -1,
@@ -60,11 +67,12 @@ class WelcomeScreen extends StatelessWidget {
                 'Connect over daily questions, real campus vibes, and shared passions. 100% free with verified student badges.',
                 style: GoogleFonts.plusJakartaSans(
                   color: AppColors.textSecondary,
-                  fontSize: 16,
+                  fontSize: 15,
                   height: 1.5,
                 ),
               ),
 
+              const SizedBox(height: 24),
               const Spacer(),
 
               // Start Button

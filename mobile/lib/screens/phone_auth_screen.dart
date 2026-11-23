@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_colors.dart';
+import '../core/widgets/responsive_layout.dart';
 import '../providers/auth_provider.dart';
 
 class PhoneAuthScreen extends ConsumerStatefulWidget {
@@ -75,8 +76,8 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: ResponsiveScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -172,6 +173,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                 ),
               ],
 
+              const SizedBox(height: 24),
               const Spacer(),
 
               // Submit Button

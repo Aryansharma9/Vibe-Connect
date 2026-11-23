@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_colors.dart';
+import '../core/widgets/responsive_layout.dart';
 import '../providers/auth_provider.dart';
 import '../providers/college_provider.dart';
 
@@ -92,8 +93,8 @@ class _CampusVerifyScreenState extends ConsumerState<CampusVerifyScreen> {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: ResponsiveScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -195,6 +196,7 @@ class _CampusVerifyScreenState extends ConsumerState<CampusVerifyScreen> {
                 ),
               ],
 
+              const SizedBox(height: 24),
               const Spacer(),
 
               Container(
