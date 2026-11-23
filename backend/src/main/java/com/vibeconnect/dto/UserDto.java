@@ -27,6 +27,7 @@ public class UserDto {
     private Boolean isStudentVerified;
     private Boolean isPhotoVerified;
     private String avatarUrl;
+    private String preferredArea;
 
     public static UserDto fromEntity(User u) {
         if (u == null) return null;
@@ -43,6 +44,7 @@ public class UserDto {
                 .isStudentVerified(u.getIsStudentVerified())
                 .isPhotoVerified(u.getIsPhotoVerified())
                 .avatarUrl(u.getAvatarUrl())
+                .preferredArea(u.getPreferredArea() != null ? u.getPreferredArea() : "Knowledge Park II")
                 .build();
     }
 }

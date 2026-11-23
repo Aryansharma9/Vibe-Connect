@@ -37,6 +37,7 @@ public class AuthDtos {
         private LocalDate dob;
         private UUID collegeId;
         private DatingIntent datingIntent;
+        private String preferredArea;
     }
 
     @Data
@@ -52,6 +53,15 @@ public class AuthDtos {
         private String gender;
         private LocalDate dob;
         private UUID collegeId;
+        private DatingIntent datingIntent;
+        private String preferredArea;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdatePreferencesRequest {
+        private String preferredArea;
         private DatingIntent datingIntent;
     }
 

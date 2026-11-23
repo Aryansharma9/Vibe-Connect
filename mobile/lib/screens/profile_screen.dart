@@ -86,10 +86,10 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      college?.name ?? 'Lloyd Institute of Engineering and Technology',
+                      college?.name ?? 'Local Area Member',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.plusJakartaSans(
-                        color: isLiet ? AppColors.campusLietGold : AppColors.textSecondary,
+                        color: AppColors.textSecondary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
@@ -155,7 +155,7 @@ class ProfileScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            user?.collegeEmail ?? (isLiet ? '@lloydcollege.in verified' : 'Verified via campus email'),
+                            user?.collegeEmail ?? (user?.isStudentVerified == true ? 'Verified student email' : 'Community Member'),
                             style: GoogleFonts.plusJakartaSans(color: AppColors.textSecondary, fontSize: 12),
                           ),
                         ],
@@ -191,7 +191,7 @@ class ProfileScreen extends ConsumerWidget {
                     const SizedBox(height: 10),
                     Text(
                       '• Zero tolerance for harassment or fake campus identities.\n'
-                      '• Meet in public spots: LIET Canteen, Knowledge Park cafes, or campus lawns.\n'
+                      '• Meet in public spots: Popular cafes, libraries, or central meetup points.\n'
                       '• Block & report any student violating community trust immediately.',
                       style: GoogleFonts.plusJakartaSans(color: AppColors.textSecondary, fontSize: 12, height: 1.5),
                     ),

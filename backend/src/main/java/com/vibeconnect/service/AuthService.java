@@ -63,6 +63,7 @@ public class AuthService {
                     .dob(req.getDob() != null ? req.getDob() : LocalDate.of(2003, 1, 1))
                     .college(college)
                     .datingIntent(req.getDatingIntent() != null ? req.getDatingIntent() : DatingIntent.GO_WITH_THE_FLOW)
+                    .preferredArea(req.getPreferredArea() != null ? req.getPreferredArea() : "Knowledge Park II")
                     .isStudentVerified(false)
                     .isPhotoVerified(false)
                     .status("ACTIVE")
@@ -71,6 +72,10 @@ public class AuthService {
             user = userRepository.save(user);
         } else {
             user = existingUserOpt.get();
+            if (req.getPreferredArea() != null) {
+                user.setPreferredArea(req.getPreferredArea());
+                user = userRepository.save(user);
+            }
         }
 
         String token = jwtTokenProvider.generateToken(user.getId(), user.getPhoneNumber());
@@ -99,6 +104,7 @@ public class AuthService {
             if (req.getDob() != null) user.setDob(req.getDob());
             if (college != null) user.setCollege(college);
             if (req.getDatingIntent() != null) user.setDatingIntent(req.getDatingIntent());
+            if (req.getPreferredArea() != null) user.setPreferredArea(req.getPreferredArea().trim());
         } else {
             user = User.builder()
                     .phoneNumber(req.getPhoneNumber().trim())
@@ -107,6 +113,7 @@ public class AuthService {
                     .dob(req.getDob() != null ? req.getDob() : LocalDate.of(2003, 1, 1))
                     .college(college)
                     .datingIntent(req.getDatingIntent() != null ? req.getDatingIntent() : DatingIntent.GO_WITH_THE_FLOW)
+                    .preferredArea(req.getPreferredArea() != null ? req.getPreferredArea().trim() : "Knowledge Park II")
                     .isStudentVerified(false)
                     .isPhotoVerified(false)
                     .status("ACTIVE")
@@ -122,6 +129,18 @@ public class AuthService {
                 .isNewUser(false)
                 .user(UserDto.fromEntity(user))
                 .build();
+    }
+
+    @Transactional
+    public UserDto updatePreferences(User currentUser, UpdatePreferencesRequest req) {
+        if (req.getPreferredArea() != null && !req.getPreferredArea().isBlank()) {
+            currentUser.setPreferredArea(req.getPreferredArea().trim());
+        }
+        if (req.getDatingIntent() != null) {
+            currentUser.setDatingIntent(req.getDatingIntent());
+        }
+        User updated = userRepository.save(currentUser);
+        return UserDto.fromEntity(updated);
     }
 
     public String requestCollegeEmailOtp(User currentUser, String collegeEmail) {

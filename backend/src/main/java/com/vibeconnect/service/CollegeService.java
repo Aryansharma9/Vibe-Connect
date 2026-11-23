@@ -19,9 +19,7 @@ public class CollegeService {
 
     public List<CollegeDto> getAllColleges() {
         return collegeRepository.findAll().stream()
-                // Sort so LIET (our campus) always appears first, then alphabetically
-                .sorted(Comparator.comparing((College c) -> !"LIET".equalsIgnoreCase(c.getShortCode()))
-                        .thenComparing(College::getName))
+                .sorted(Comparator.comparing(College::getName))
                 .map(CollegeDto::fromEntity)
                 .collect(Collectors.toList());
     }

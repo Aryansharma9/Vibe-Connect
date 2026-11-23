@@ -58,6 +58,10 @@ public class User {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @Column(name = "preferred_area")
+    @Builder.Default
+    private String preferredArea = "Knowledge Park II";
+
     @Column(length = 20)
     @Builder.Default
     private String status = "ACTIVE";

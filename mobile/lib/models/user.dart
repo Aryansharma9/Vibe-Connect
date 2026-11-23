@@ -13,6 +13,7 @@ class User {
   final bool isStudentVerified;
   final bool isPhotoVerified;
   final String? avatarUrl;
+  final String preferredArea;
 
   User({
     required this.id,
@@ -27,6 +28,7 @@ class User {
     required this.isStudentVerified,
     required this.isPhotoVerified,
     this.avatarUrl,
+    this.preferredArea = 'Knowledge Park II',
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -43,6 +45,7 @@ class User {
       isStudentVerified: json['isStudentVerified'] as bool? ?? false,
       isPhotoVerified: json['isPhotoVerified'] as bool? ?? false,
       avatarUrl: json['avatarUrl'] as String?,
+      preferredArea: json['preferredArea'] as String? ?? 'Knowledge Park II',
     );
   }
 }

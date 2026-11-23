@@ -146,25 +146,6 @@ class CollegePickerScreen extends ConsumerWidget {
                                               ),
                                             ),
                                           ),
-                                          if (isLiet) ...[
-                                            const SizedBox(width: 6),
-                                            Container(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 2),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.campusLietGold,
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                'OUR CAMPUS',
-                                                style: GoogleFonts.plusJakartaSans(
-                                                  color: Colors.black,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
                                         ],
                                       ),
                                       const SizedBox(height: 4),

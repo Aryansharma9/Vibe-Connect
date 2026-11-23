@@ -26,5 +26,5 @@ class College {
     );
   }
 
-  bool get isLiet => shortCode.toUpperCase() == 'LIET';
+  bool get isLiet => false;
 }

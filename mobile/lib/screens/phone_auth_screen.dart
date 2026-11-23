@@ -53,8 +53,8 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
     if (ok) {
       final state = ref.read(authProvider);
       if (state.isNewUser) {
-        // Direct new students to pick their campus!
-        if (mounted) context.push('/college-picker');
+        // Direct new students to enter their details!
+        if (mounted) context.push('/profile-setup');
       } else {
         if (mounted) context.go('/dashboard');
       }

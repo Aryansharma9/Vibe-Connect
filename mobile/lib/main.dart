@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'core/constants/app_colors.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/phone_auth_screen.dart';
-import 'screens/college_picker_screen.dart';
 import 'screens/profile_setup_screen.dart';
+import 'screens/search_specification_screen.dart';
 import 'screens/campus_verify_screen.dart';
 import 'screens/connections_inbox_screen.dart';
 import 'screens/chat_room_screen.dart';
@@ -29,11 +29,15 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: '/college-picker',
-      builder: (context, state) => const CollegePickerScreen(),
+      builder: (context, state) => const ProfileSetupScreen(),
     ),
     GoRoute(
       path: '/profile-setup',
       builder: (context, state) => const ProfileSetupScreen(),
+    ),
+    GoRoute(
+      path: '/search-specification',
+      builder: (context, state) => const SearchSpecificationScreen(),
     ),
     GoRoute(
       path: '/campus-verify',

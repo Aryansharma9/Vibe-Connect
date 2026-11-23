@@ -49,6 +49,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final _dio = ApiClient().dio;
 
   void logout() {
+    ApiClient().setAuthToken(null);
     state = AuthState();
   }
 
@@ -122,6 +123,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String dob,
     College? college,
     required String datingIntent,
+    String? preferredArea,
   }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -133,6 +135,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         'dob': dob,
         if (college != null) 'collegeId': college.id,
         'datingIntent': datingIntent,
+        if (preferredArea != null) 'preferredArea': preferredArea,
       });
 
       if (res.data != null && res.data['success'] == true) {
@@ -181,8 +184,37 @@ class AuthNotifier extends StateNotifier<AuthState> {
       return false;
     }
   }
+
+  Future<bool> updatePreferredArea(String area) async {
+    try {
+      final res = await _dio.put('/users/preferences', data: {'preferredArea': area});
+      if (res.data != null && res.data['success'] == true) {
+        final updatedUser = User.fromJson(res.data['data']);
+        state = state.copyWith(currentUser: updatedUser);
+        return true;
+      }
+    } catch (_) {}
+    return false;
+  }
 }
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier();
+});
+
+final selectedAreaProvider = StateProvider<String>((ref) => 'Knowledge Park II');
+
+final areaMatchesProvider = FutureProvider.autoDispose<List<User>>((ref) async {
+  final area = ref.watch(selectedAreaProvider);
+  try {
+    final dio = ApiClient().dio;
+    final res = await dio.get('/users/matches', queryParameters: {'area': area});
+    if (res.data['success'] == true) {
+      final list = (res.data['data'] as List).map((j) => User.fromJson(j)).toList();
+      return list;
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
 });

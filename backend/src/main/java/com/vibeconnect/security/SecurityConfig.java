@@ -39,6 +39,7 @@ public class SecurityConfig {
                                 "/api/v1/chat/**",
                                 "/api/v1/spaces/**",
                                 "/api/v1/moderation/**",
+                                "/api/v1/users/**",
                                 "/error",
                                 "/ws/**"
                         ).permitAll()

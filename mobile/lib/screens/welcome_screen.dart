@@ -27,18 +27,18 @@ class WelcomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.surfaceLight,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.campusLietGold.withOpacity(0.4)),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.4)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.school, color: AppColors.campusLietGold, size: 16),
+                    const Icon(Icons.location_on, color: AppColors.primary, size: 16),
                     const SizedBox(width: 8),
                     Flexible(
                       child: Text(
-                        'Greater Noida Campus Edition • LIET Hub',
+                        'Greater Noida & NCR Edition • Meet Real People Nearby',
                         style: GoogleFonts.plusJakartaSans(
-                          color: AppColors.campusLietGold,
+                          color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
                         ),
@@ -64,7 +64,7 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               Text(
-                'Connect over daily questions, real campus vibes, and shared passions. 100% free with verified student badges.',
+                'Connect over daily questions, real local vibes, shared interests, and your favorite hangout spots in the area.',
                 style: GoogleFonts.plusJakartaSans(
                   color: AppColors.textSecondary,
                   fontSize: 15,
