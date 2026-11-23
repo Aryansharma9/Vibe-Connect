@@ -112,6 +112,46 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<bool> registerProfile({
+    required String fullName,
+    required String gender,
+    required String dob,
+    College? college,
+    required String datingIntent,
+  }) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    try {
+      final phone = state.phoneNumber ?? '9155817519';
+      final res = await _dio.post('/auth/register', data: {
+        'phoneNumber': phone,
+        'fullName': fullName,
+        'gender': gender,
+        'dob': dob,
+        if (college != null) 'collegeId': college.id,
+        'datingIntent': datingIntent,
+      });
+
+      if (res.data != null && res.data['success'] == true) {
+        final data = res.data['data'];
+        final token = data['accessToken'] as String?;
+        ApiClient().setAuthToken(token);
+
+        final userMap = data['user'] as Map<String, dynamic>;
+        state = state.copyWith(
+          isLoading: false,
+          isNewUser: false,
+          currentUser: User.fromJson(userMap),
+        );
+        return true;
+      }
+      state = state.copyWith(isLoading: false, errorMessage: res.data['message']);
+      return false;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, errorMessage: 'Registration failed: $e');
+      return false;
+    }
+  }
+
   Future<String?> sendCollegeEmailOtp(String email) async {
     try {
       final res = await _dio.post('/auth/college-email/otp', data: {'collegeEmail': email});

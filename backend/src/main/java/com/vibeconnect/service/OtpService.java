@@ -57,8 +57,9 @@ public class OtpService {
         }
 
         String normalizedRecipient = recipient.trim().toLowerCase();
+        // Check for active code in the last 10 minutes
         Optional<VerificationCode> codeOpt = verificationCodeRepository
-                .findTopByRecipientAndTypeAndIsUsedFalseAndExpiresAtAfterOrderByCreatedAtDesc(
+                .findTopByRecipientAndTypeAndExpiresAtAfterOrderByCreatedAtDesc(
                         normalizedRecipient, type, Instant.now());
 
         if (codeOpt.isPresent() && codeOpt.get().getCode().equals(inputCode.trim())) {

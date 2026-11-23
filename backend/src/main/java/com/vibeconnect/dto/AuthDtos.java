@@ -42,6 +42,22 @@ public class AuthDtos {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class RegisterRequest {
+        @NotBlank(message = "Phone number is required")
+        private String phoneNumber;
+
+        @NotBlank(message = "Full name is required")
+        private String fullName;
+
+        private String gender;
+        private LocalDate dob;
+        private UUID collegeId;
+        private DatingIntent datingIntent;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RequestCollegeEmailOtpRequest {
         @NotBlank(message = "College email is required")
         private String collegeEmail;

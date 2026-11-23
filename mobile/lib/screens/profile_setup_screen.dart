@@ -42,11 +42,8 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     }
 
     final college = ref.read(selectedCollegeProvider);
-    final authState = ref.read(authProvider);
 
-    // Call verify to create student profile
-    final ok = await ref.read(authProvider.notifier).verifyPhoneOtp(
-      authState.devOtp ?? '123456',
+    final ok = await ref.read(authProvider.notifier).registerProfile(
       fullName: name,
       gender: _selectedGender,
       dob: _dob.toIso8601String().split('T').first,
@@ -55,14 +52,19 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     );
 
     if (ok && mounted) {
-      // Offer student email verification for the Verified badge
       context.push('/campus-verify');
+    } else if (mounted) {
+      final err = ref.read(authProvider).errorMessage ?? 'Registration failed';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.redAccent, content: Text(err)),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final selectedCollege = ref.watch(selectedCollegeProvider);
+    final authState = ref.watch(authProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -193,20 +195,26 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: ElevatedButton(
-                  onPressed: _onCompleteSetup,
+                  onPressed: authState.isLoading ? null : _onCompleteSetup,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                   ),
-                  child: Text(
-                    'Save & Continue',
-                    style: GoogleFonts.plusJakartaSans(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  child: authState.isLoading
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                        )
+                      : Text(
+                          'Save & Continue',
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 20),

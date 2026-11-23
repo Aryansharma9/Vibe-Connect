@@ -35,6 +35,17 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<AuthResponse>> registerProfile(
+            @Valid @RequestBody RegisterRequest request) {
+        try {
+            AuthResponse response = authService.registerProfile(request);
+            return ResponseEntity.ok(ApiResponse.ok("Profile registered successfully", response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.fail(e.getMessage()));
+        }
+    }
+
     @PostMapping("/college-email/otp")
     public ResponseEntity<ApiResponse<String>> requestCollegeEmailOtp(
             @AuthenticationPrincipal User currentUser,

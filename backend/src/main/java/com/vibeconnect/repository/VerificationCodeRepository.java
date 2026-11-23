@@ -12,4 +12,7 @@ import java.util.UUID;
 public interface VerificationCodeRepository extends JpaRepository<VerificationCode, UUID> {
     Optional<VerificationCode> findTopByRecipientAndTypeAndIsUsedFalseAndExpiresAtAfterOrderByCreatedAtDesc(
             String recipient, String type, Instant now);
+
+    Optional<VerificationCode> findTopByRecipientAndTypeAndExpiresAtAfterOrderByCreatedAtDesc(
+            String recipient, String type, Instant now);
 }

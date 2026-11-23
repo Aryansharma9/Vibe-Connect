@@ -83,6 +83,47 @@ public class AuthService {
                 .build();
     }
 
+    @Transactional
+    public AuthResponse registerProfile(RegisterRequest req) {
+        College college = null;
+        if (req.getCollegeId() != null) {
+            college = collegeService.getCollegeById(req.getCollegeId());
+        }
+
+        Optional<User> existingUserOpt = userRepository.findByPhoneNumber(req.getPhoneNumber().trim());
+        User user;
+        if (existingUserOpt.isPresent()) {
+            user = existingUserOpt.get();
+            user.setFullName(req.getFullName().trim());
+            if (req.getGender() != null) user.setGender(req.getGender());
+            if (req.getDob() != null) user.setDob(req.getDob());
+            if (college != null) user.setCollege(college);
+            if (req.getDatingIntent() != null) user.setDatingIntent(req.getDatingIntent());
+        } else {
+            user = User.builder()
+                    .phoneNumber(req.getPhoneNumber().trim())
+                    .fullName(req.getFullName().trim())
+                    .gender(req.getGender() != null ? req.getGender() : "NOT_SPECIFIED")
+                    .dob(req.getDob() != null ? req.getDob() : LocalDate.of(2003, 1, 1))
+                    .college(college)
+                    .datingIntent(req.getDatingIntent() != null ? req.getDatingIntent() : DatingIntent.GO_WITH_THE_FLOW)
+                    .isStudentVerified(false)
+                    .isPhotoVerified(false)
+                    .status("ACTIVE")
+                    .build();
+        }
+        user = userRepository.save(user);
+
+        String token = jwtTokenProvider.generateToken(user.getId(), user.getPhoneNumber());
+
+        return AuthResponse.builder()
+                .accessToken(token)
+                .tokenType("Bearer")
+                .isNewUser(false)
+                .user(UserDto.fromEntity(user))
+                .build();
+    }
+
     public String requestCollegeEmailOtp(User currentUser, String collegeEmail) {
         if (currentUser.getCollege() == null) {
             throw new IllegalStateException("Please select your college first");
