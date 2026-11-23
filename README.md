@@ -112,7 +112,7 @@ flutter run -d chrome
 - [x] **Phase 1:** Phone OTP Auth, Greater Noida college catalog, LIET email verification badge.
 - [x] **Phase 2:** Daily moments question engine & reciprocal answer feed.
 - [x] **Phase 3:** Intentional connection requests with 140-char custom notes.
-- [ ] **Phase 4:** Real-time 1-on-1 WebSocket chat (STOMP) & safety controls.
+- [x] **Phase 4:** Real-time 1-on-1 WebSocket chat (STOMP) & safety controls.
 - [ ] **Phase 5:** Themed interest spaces & campus closed beta rollout at LIET.
 
 ---

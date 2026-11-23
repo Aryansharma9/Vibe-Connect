@@ -320,9 +320,10 @@ class _ConnectionsInboxScreenState extends ConsumerState<ConnectionsInboxScreen>
 
     return InkWell(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Phase 4 WebSocket chat with ${other?.fullName} coming up next!")),
-        );
+        final name = Uri.encodeComponent(other?.fullName ?? "Student");
+        final collegeName = Uri.encodeComponent(college?.name ?? "Campus");
+        final verified = other?.isStudentVerified == true;
+        context.push('/chat/${conv.id}?name=$name&college=$collegeName&verified=$verified');
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(

@@ -9,6 +9,7 @@ import 'screens/profile_setup_screen.dart';
 import 'screens/campus_verify_screen.dart';
 import 'screens/home_dashboard_screen.dart';
 import 'screens/connections_inbox_screen.dart';
+import 'screens/chat_room_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +46,21 @@ final _router = GoRouter(
     GoRoute(
       path: '/inbox',
       builder: (context, state) => const ConnectionsInboxScreen(),
+    ),
+    GoRoute(
+      path: '/chat/:conversationId',
+      builder: (context, state) {
+        final convId = state.pathParameters['conversationId'] ?? '';
+        final name = state.uri.queryParameters['name'] ?? 'Student';
+        final college = state.uri.queryParameters['college'] ?? 'Campus';
+        final verified = state.uri.queryParameters['verified'] == 'true';
+        return ChatRoomScreen(
+          conversationId: convId,
+          peerName: name,
+          peerCollege: college,
+          isVerified: verified,
+        );
+      },
     ),
   ],
 );
