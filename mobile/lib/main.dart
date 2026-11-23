@@ -7,9 +7,9 @@ import 'screens/phone_auth_screen.dart';
 import 'screens/college_picker_screen.dart';
 import 'screens/profile_setup_screen.dart';
 import 'screens/campus_verify_screen.dart';
-import 'screens/home_dashboard_screen.dart';
 import 'screens/connections_inbox_screen.dart';
 import 'screens/chat_room_screen.dart';
+import 'screens/main_navigation_shell.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +41,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: '/dashboard',
-      builder: (context, state) => const HomeDashboardScreen(),
+      builder: (context, state) => const MainNavigationShell(),
     ),
     GoRoute(
       path: '/inbox',
@@ -54,11 +54,13 @@ final _router = GoRouter(
         final name = state.uri.queryParameters['name'] ?? 'Student';
         final college = state.uri.queryParameters['college'] ?? 'Campus';
         final verified = state.uri.queryParameters['verified'] == 'true';
+        final userId = state.uri.queryParameters['userId'];
         return ChatRoomScreen(
           conversationId: convId,
           peerName: name,
           peerCollege: college,
           isVerified: verified,
+          peerUserId: userId,
         );
       },
     ),

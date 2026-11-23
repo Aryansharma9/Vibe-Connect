@@ -7,12 +7,14 @@ import 'package:intl/intl.dart';
 import '../core/constants/app_colors.dart';
 import '../models/chat_message.dart';
 import '../providers/chat_provider.dart';
+import '../widgets/report_user_dialog.dart';
 
 class ChatRoomScreen extends ConsumerStatefulWidget {
   final String conversationId;
   final String peerName;
   final String peerCollege;
   final bool isVerified;
+  final String? peerUserId;
 
   const ChatRoomScreen({
     super.key,
@@ -20,6 +22,7 @@ class ChatRoomScreen extends ConsumerStatefulWidget {
     required this.peerName,
     required this.peerCollege,
     required this.isVerified,
+    this.peerUserId,
   });
 
   @override
@@ -121,6 +124,19 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shield_outlined, color: AppColors.errorRed, size: 22),
+            tooltip: 'Report or Block',
+            onPressed: () {
+              ReportUserDialog.show(
+                context,
+                userId: widget.peerUserId ?? widget.conversationId,
+                userName: widget.peerName,
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [

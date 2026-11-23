@@ -323,7 +323,8 @@ class _ConnectionsInboxScreenState extends ConsumerState<ConnectionsInboxScreen>
         final name = Uri.encodeComponent(other?.fullName ?? "Student");
         final collegeName = Uri.encodeComponent(college?.name ?? "Campus");
         final verified = other?.isStudentVerified == true;
-        context.push('/chat/${conv.id}?name=$name&college=$collegeName&verified=$verified');
+        final userId = other?.id ?? '';
+        context.push('/chat/${conv.id}?name=$name&college=$collegeName&verified=$verified&userId=$userId');
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(

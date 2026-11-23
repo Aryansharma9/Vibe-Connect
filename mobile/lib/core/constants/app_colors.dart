@@ -21,6 +21,7 @@ class AppColors {
   static const Color verifiedBlue = Color(0xFF00B4D8);
   static const Color successGreen = Color(0xFF06D6A0);
   static const Color campusLietGold = Color(0xFFFFB703);
+  static const Color errorRed = Color(0xFFFF3366);
 
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(

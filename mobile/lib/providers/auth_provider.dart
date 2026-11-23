@@ -48,6 +48,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   final _dio = ApiClient().dio;
 
+  void logout() {
+    state = AuthState();
+  }
+
   Future<bool> sendPhoneOtp(String phone) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
