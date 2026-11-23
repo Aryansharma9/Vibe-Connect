@@ -1,0 +1,35 @@
+# IDE & System files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.log
+
+# Environment & Secrets
+.env
+*.local
+
+# Spring Boot & Java (Backend)
+backend/target/
+backend/*.jar
+backend/*.war
+backend/.flattened-pom.xml
+
+# Flutter & Dart (Mobile)
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/app/build/
+mobile/windows/flutter/ephemeral/
+mobile/linux/flutter/ephemeral/
+mobile/macos/Flutter/ephemeral/
+mobile/ios/Flutter/Generated.xcconfig
+mobile/ios/Flutter/app.framework
+mobile/ios/Pods/
+mobile/.pub-cache/
+mobile/.pub/
